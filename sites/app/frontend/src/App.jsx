@@ -1,33 +1,31 @@
-import { useState } from 'react'
-import './App.css'
+import { Box, Stack } from "@mui/system";
+import React from "react";
+import Predict from "./components/Predict";
+import Navbar from "./components/Navbar";
+import { Routes, Route, useLocation } from "react-router-dom";
+import TextPreprocessing from "./components/TextPreprocessing";
+import Similarities from "./components/Similarities";
+import Cosmul from "./components/Cosmul";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src='' className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <Box>
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/" element={<Predict></Predict>} />
+        <Route
+          path="/text-preprocessing"
+          element={
+            <Stack direction="row" justifyContent="space-between">
+              <TextPreprocessing></TextPreprocessing>
+            </Stack>
+          }
+        />
+        <Route path="/similarities" element={<Similarities></Similarities>} />
+        <Route path="/cosmul" element={<Cosmul></Cosmul>} />
+      </Routes>
+    </Box>
+  );
 }
 
-export default App
+export default App;
