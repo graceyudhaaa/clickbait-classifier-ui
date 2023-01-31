@@ -4,7 +4,6 @@ import {
   TextField,
   Button,
   Stack,
-  FormControlLabel,
   FormHelperText,
   FormControl,
   InputLabel,
@@ -61,39 +60,41 @@ function Similarities() {
       .then((response) => response.json())
       .then((response) => {
         setResult(response);
-
         setIsLoading(false);
         setCalculated(true);
       });
-    console.log(result);
   };
 
   const similaritiesResult = (
-    <TableContainer component={Paper}>
-      <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Word</TableCell>
-            <TableCell>Cosine Similarities</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {!!result &&
-            result.map((row) => {
-              return (
-                <TableRow key={row[0]}>
-                  <TableCell component="th" scope="row">
-                    {row[0]}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row[1]}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box sx={{ overflow: "auto", overflowX: "auto" }}>
+      <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+        <TableContainer component={Paper}>
+          <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Word</TableCell>
+                <TableCell>Cosine Similarities</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!!result &&
+                result.map((row) => {
+                  return (
+                    <TableRow key={row[0]}>
+                      <TableCell component="th" scope="row">
+                        {row[0]}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row[1]}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 
   return (
@@ -136,15 +137,17 @@ function Similarities() {
             )}
           </Box>
           {/* Display result */}
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ pt: 2 }}>
             <Grid item xs={12} md={10}>
               <FormGroup display="flex">
                 <FormControl>
                   <TextField
                     sx={{ display: "flex" }}
                     error={!validate && !word}
-                    helperText={validate ? "" : "You need to input the word!"}
-                    id="outlined-basic"
+                    helperText={
+                      !validate && !word ? "You need to input the word!" : ""
+                    }
+                    id="word"
                     label="Word"
                     variant="outlined"
                     onChange={(event) => {

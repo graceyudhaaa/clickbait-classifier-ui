@@ -62,86 +62,92 @@ function TextPreprocessing() {
   };
 
   const preprocessResult = (
-    <TableContainer component={Paper}>
-      <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Step</TableCell>
-            <TableCell>Preprocessing Result</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow key={result.text}>
-            <TableCell component="th" scope="row">
-              Original Text
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {result.text}
-            </TableCell>
-          </TableRow>
-          <TableRow key={result.casefolding}>
-            <TableCell component="th" scope="row">
-              Casefolding
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {result.casefolding}
-            </TableCell>
-          </TableRow>
-          <TableRow key={result.replace_exclamation_question}>
-            <TableCell component="th" scope="row">
-              Replace Exclamation & Question Mark
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {result.replace_exclamation_question}
-            </TableCell>
-          </TableRow>
-          <TableRow key={result.remove_punct}>
-            <TableCell component="th" scope="row">
-              Remove Punctuation
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {result.remove_punct}
-            </TableCell>
-          </TableRow>
-          <TableRow key={result.replace_num}>
-            <TableCell component="th" scope="row">
-              Remove Number
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {result.replace_num}
-            </TableCell>
-          </TableRow>
-          {stopword && (
-            <TableRow key={result.remove_stopword}>
-              <TableCell component="th" scope="row">
-                Remove Stopword
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {result.remove_stopword}
-              </TableCell>
-            </TableRow>
-          )}
-          {stemming && (
-            <TableRow key={result.stemming}>
-              <TableCell component="th" scope="row">
-                Stemming
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {result.stemming}
-              </TableCell>
-            </TableRow>
-          )}
-          <TableRow key={result.tokenized}>
-            <TableCell component="th" scope="row">
-              Tokenized
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {preprocessed ? "[ " + result.tokenized.join(", ") + " ]" : null}
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box sx={{ overflow: "auto", overflowX: "auto" }}>
+      <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+        <TableContainer component={Paper}>
+          <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Step</TableCell>
+                <TableCell>Preprocessing Result</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow key={result.text}>
+                <TableCell component="th" scope="row">
+                  Original Text
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.text}
+                </TableCell>
+              </TableRow>
+              <TableRow key={result.casefolding}>
+                <TableCell component="th" scope="row">
+                  Casefolding
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.casefolding}
+                </TableCell>
+              </TableRow>
+              <TableRow key={result.replace_exclamation_question}>
+                <TableCell component="th" scope="row">
+                  Replace Exclamation & Question Mark
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.replace_exclamation_question}
+                </TableCell>
+              </TableRow>
+              <TableRow key={result.remove_punct}>
+                <TableCell component="th" scope="row">
+                  Remove Punctuation
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.remove_punct}
+                </TableCell>
+              </TableRow>
+              <TableRow key={result.replace_num}>
+                <TableCell component="th" scope="row">
+                  Remove Number
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.replace_num}
+                </TableCell>
+              </TableRow>
+              {stopword && (
+                <TableRow key={result.remove_stopword}>
+                  <TableCell component="th" scope="row">
+                    Remove Stopword
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {result.remove_stopword}
+                  </TableCell>
+                </TableRow>
+              )}
+              {stemming && (
+                <TableRow key={result.stemming}>
+                  <TableCell component="th" scope="row">
+                    Stemming
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {result.stemming}
+                  </TableCell>
+                </TableRow>
+              )}
+              <TableRow key={result.tokenized}>
+                <TableCell component="th" scope="row">
+                  Tokenized
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {preprocessed
+                    ? "[ " + result.tokenized.join(", ") + " ]"
+                    : null}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 
   return (
@@ -184,7 +190,7 @@ function TextPreprocessing() {
             )}
           </Box>
           {/* Display result */}
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ pt: 2 }}>
             <Grid item xs={12} md={10}>
               <FormGroup display="flex">
                 <FormControl>
@@ -192,7 +198,7 @@ function TextPreprocessing() {
                     sx={{ display: "flex" }}
                     error={!validate}
                     helperText={validate ? "" : "You need to input headline!"}
-                    id="outlined-basic"
+                    id="headline"
                     label="Headline"
                     variant="outlined"
                     onChange={(event) => {

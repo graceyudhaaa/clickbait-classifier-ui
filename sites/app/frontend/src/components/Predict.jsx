@@ -203,7 +203,7 @@ function Predict() {
                     sx={{ display: "flex" }}
                     error={!validate}
                     helperText={validate ? "" : "You need to input headline!"}
-                    id="outlined-basic"
+                    id="headline"
                     label="Headline"
                     variant="outlined"
                     onChange={(event) => {
