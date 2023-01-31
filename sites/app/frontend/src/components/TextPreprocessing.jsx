@@ -56,7 +56,6 @@ function TextPreprocessing() {
       .then((response) => response.json())
       .then((response) => {
         setResult(response);
-        // console.log(result);
         setIsLoading(false);
         setPreprocessed(true);
       });
@@ -64,7 +63,7 @@ function TextPreprocessing() {
 
   const preprocessResult = (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Step</TableCell>
