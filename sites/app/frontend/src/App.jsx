@@ -15,11 +15,7 @@ function App() {
         <Route path="/" element={<Predict></Predict>} />
         <Route
           path="/text-preprocessing"
-          element={
-            <Stack direction="row" justifyContent="space-between">
-              <TextPreprocessing></TextPreprocessing>
-            </Stack>
-          }
+          element={<TextPreprocessing></TextPreprocessing>}
         />
         <Route path="/similarities" element={<Similarities></Similarities>} />
         <Route path="/cosmul" element={<Cosmul></Cosmul>} />

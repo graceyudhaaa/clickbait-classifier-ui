@@ -33,7 +33,7 @@ function Predict() {
   const handlePredictClick = (event) => {
     if (headline === "") {
       setValidate(false);
-      return none;
+      return null;
     }
     setIsLoading(true);
     setValidate(true);
@@ -171,6 +171,7 @@ function Predict() {
             justifyContent="center"
             variant="h1"
             component="div"
+            mt={5}
             sx={{ fontWeight: 500, fontSize: 24 }}
           >
             Predict Headline
