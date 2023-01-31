@@ -8,6 +8,14 @@ export default defineConfig({
     react(),
     cssInjectedByJsPlugin()
   ],
+  server: {
+    proxy: {
+      '/api':{
+        target: "http://localhost:5000",
+        changeOrigin: true,
+      }
+    },
+  },
   build: {
     cssCodeSplit: false,
     rollupOptions: {
