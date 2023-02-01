@@ -3,60 +3,72 @@ import pandas as pd
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
 punctuation = [i for i in string.punctuation if (i != '!') and (i != '?')]
-stopword = pd.read_csv('sites/app/stopword_selected.csv', names=[0])[0].tolist()
+stopword = pd.read_csv('sites/app/stopword_selected.csv',
+                       names=[0])[0].tolist()
+
 
 def is_in_punct(text):
-  """Mengecek apakah text memiliki tanda baca"""
-  word = []
-  for i in text:
-    if i not in punctuation:
-      word.append(i)
+    """Mengecek apakah text memiliki tanda baca"""
+    word = []
+    for i in text:
+        if i not in punctuation:
+            word.append(i)
 
-  return ''.join(word)
+    return ''.join(word)
+
 
 def replace_exclamation_question(text):
-  """Menggantikan '!' dan '?' dengan placeholder sebagai tambahan fitur"""
-  return text.replace('!', ' tanda seru').replace('?', ' tanda tanya')
+    """Menggantikan '!' dan '?' dengan placeholder sebagai tambahan fitur"""
+    return text.replace('!', ' tanda seru').replace('?', ' tanda tanya')
+
 
 def remove_not_punct(text):
-  """Menghapus punctuation"""
-  sentence = []
-  for word in text.split():
-    s = ''.join(filter(is_in_punct, word))
-    sentence.append(s)
-  
-  return ' '.join(sentence)
+    """Menghapus punctuation"""
+    word = []
+    for i in text:
+        if i not in punctuation:
+            word.append(i)
+        else:
+            word.append(' ')
+
+    word = ''.join(word)
+
+    return " ".join(word.split())
+
 
 def remove_stopword(text):
-  sentence = []
-  for word in text.split():
-    if word not in stopword:
-      sentence.append(word)
-  
-  return ' '.join(sentence)
+    sentence = []
+    for word in text.split():
+        if word not in stopword:
+            sentence.append(word)
+
+    return ' '.join(sentence)
+
 
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 
-def stemming(text):
-  word = []
-  for i in text.split():
-    if i.isupper():
-        i = stemmer.stem(i).upper()
-        word.append(i)
-    else:
-        i = stemmer.stem(i)
-        word.append(i)
 
-  return ' '.join(word)
+def stemming(text):
+    word = []
+    for i in text.split():
+        if i.isupper():
+            i = stemmer.stem(i).upper()
+            word.append(i)
+        else:
+            i = stemmer.stem(i)
+            word.append(i)
+
+    return ' '.join(word)
+
 
 def replace_num(text):
-  """"Mengganti digit dengan placeholder"""
-  word = []
-  for i in text.split():
-    if i.isdigit():
-      continue
-    else:
-      word.append(i)
-    
-  return ' '.join(word)
+    """"Mengganti digit dengan placeholder"""
+    word = []
+    for i in text.split():
+        if i.isdigit():
+            continue
+        else:
+            word.append(i)
+
+    return ' '.join(word)

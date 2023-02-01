@@ -113,7 +113,7 @@ function TextPreprocessing() {
                   {result.replace_num}
                 </TableCell>
               </TableRow>
-              {stopword && (
+              {result.remove_stopword && (
                 <TableRow key={result.remove_stopword}>
                   <TableCell component="th" scope="row">
                     Remove Stopword
@@ -123,7 +123,7 @@ function TextPreprocessing() {
                   </TableCell>
                 </TableRow>
               )}
-              {stemming && (
+              {result.stemming && (
                 <TableRow key={result.stemming}>
                   <TableCell component="th" scope="row">
                     Stemming
