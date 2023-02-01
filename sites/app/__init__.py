@@ -6,10 +6,13 @@ from dotenv import load_dotenv
 from .config import *
 
 from .blueprint.api.controllers import api
+from .blueprint.clickbait.controllers import clickbait
 
 load_dotenv()
 
 # ===================Error handling===================
+
+
 def page_not_found(error):
     return render_template("404.html"), 404
 
@@ -35,7 +38,8 @@ def create_app():
     # ===================Registering Error===================
 
     # ===================Registering Blueprint===================
-    
+
     app.register_blueprint(api)
+    app.register_blueprint(clickbait)
 
     return app

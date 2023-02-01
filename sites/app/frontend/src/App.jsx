@@ -6,6 +6,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import TextPreprocessing from "./components/TextPreprocessing";
 import Similarities from "./components/Similarities";
 import Cosmul from "./components/Cosmul";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/similarities" element={<Similarities></Similarities>} />
         <Route path="/cosmul" element={<Cosmul></Cosmul>} />
       </Routes>
+      <Footer></Footer>
     </Box>
   );
 }

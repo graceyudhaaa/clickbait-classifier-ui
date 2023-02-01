@@ -10,7 +10,7 @@ import {
   Drawer,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import SettingsIcon from "@mui/icons-material/Settings";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { React, useState } from "react";
 import { theme } from "../theme";
 import { Link, useLocation } from "react-router-dom";
@@ -43,7 +43,7 @@ function Navbar() {
               aria-label="menu"
               sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
             >
-              <SettingsIcon />
+              <HighlightOffOutlinedIcon />
             </IconButton>
           </Box>
           <Stack direction="row" sx={{ display: { xs: "none", md: "block" } }}>
