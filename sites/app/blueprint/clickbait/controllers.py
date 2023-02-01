@@ -5,9 +5,7 @@ clickbait = Blueprint(
 )
 
 
-@clickbait.route('/')
-@clickbait.route('/text-preprocessing')
-@clickbait.route('/similarities')
-@clickbait.route('/cosmul')
-def index():
+@clickbait.route('/', defaults={'path': ''})
+@clickbait.route('/<path:path>')
+def index(path):
     return render_template('clickbait.html')
