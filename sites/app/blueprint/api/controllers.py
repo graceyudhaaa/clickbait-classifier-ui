@@ -48,7 +48,7 @@ model_threshold = {
 word2vec_dict = {
     'idwiki_100_cbow': 'idwiki_word2vec_100_new_lower.model',
     'idwiki_200_cbow': 'idwiki_word2vec_200_new_lower.model',
-    'leizig_100_cbow': 'word2vec100_leipzig_stopword_in_not_stemmed_cbow.model',
+    'leipzig_100_cbow': 'word2vec100_leipzig_stopword_in_not_stemmed_cbow.model',
     'leipzig_100_skipgram': 'word2vec100_leipzig_stopword_in_not_stemmed_skip-gram.model',
     'leipzig_200_cbow': 'word2vec200_leipzig_stopword_in_not_stemmed_cbow.model',
     'leipzig_200_skipgram': 'word2vec200_leipzig_stopword_in_not_stemmed_skip-gram.model',
@@ -245,7 +245,10 @@ def preprocess():
 def word2vec_sim():
     data = request.json                         # get data from request
 
-    text = data['text'].lower().split()    # get text
+    text = data['text']
+    text = text_cleaning_stopword_in_not_stemmed(
+        text).lower().split()    # get text
+
     corpus = data['corpus']                  # get corpus
     dimension = str(data['dimension'])          # get the embedding dimension
     algorithm = data['algorithm']               # get the training algorithm
@@ -255,7 +258,15 @@ def word2vec_sim():
 
     model = gensim.models.Word2Vec.load(model_path)
 
-    result = model.wv.most_similar(text)
+    text_list = []
+    for w in text:
+        try:
+            model.wv.get_vector(w)
+            text_list.append(w)
+        except:
+            continue
+
+    result = model.wv.most_similar(text_list)
 
     return jsonify(result)
 
@@ -265,9 +276,14 @@ def word2vec_sim():
 def word2vec_sim_cosmul():
     data = request.json                         # get data from request
 
-    text_positive = data['text_positive'].lower().split()    # get positve text
-    text_negative = data['text_negative'].lower(
-    ).split()    # get negative text
+    text_positive = data['text_positive']
+    text_positive = text_cleaning_stopword_in_not_stemmed(
+        text_positive).lower().split()    # get positve text
+
+    text_negative = data['text_negative']    # get negative text
+    text_negative = text_cleaning_stopword_in_not_stemmed(
+        text_negative).lower().split()    # get negative text
+
     corpus = data['corpus']                           # get corpus
     # get the embedding dimension
     dimension = str(data['dimension'])
@@ -279,6 +295,23 @@ def word2vec_sim_cosmul():
 
     model = gensim.models.Word2Vec.load(model_path)
 
-    result = model.wv.most_similar_cosmul(text_positive, text_negative)
+    text_positive_list = []
+    for w in text_positive:
+        try:
+            model.wv.get_vector(w)
+            text_positive_list.append(w)
+        except:
+            continue
+
+    text_negative_list = []
+    for w in text_negative:
+        try:
+            model.wv.get_vector(w)
+            text_negative_list.append(w)
+        except:
+            continue
+
+    result = model.wv.most_similar_cosmul(
+        text_positive_list, text_negative_list)
 
     return jsonify(result)
