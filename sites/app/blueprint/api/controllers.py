@@ -1,3 +1,5 @@
+import json
+import base64
 from flask import Blueprint, jsonify, request, Response
 from flask_cors import CORS, cross_origin
 from ...utils import (
@@ -210,6 +212,58 @@ def predict():
         'result': 0 if score < 0.5 else 1,
         'result_best_threshold': 0 if score < best_threshold else 1,
         'best_threshold': best_threshold
+    }
+
+    return jsonify(response)
+
+
+@api.route('/api/about', methods=['POST'])
+@cross_origin()
+def about():
+    data = request.json                         # get data from request
+
+    stopword = data['stopword']                # get the stopword parameter
+    stemming = data['stemming']                # get the stemming parameter
+    # get the lstm layer type parameter
+    lstm_mode = data['lstm']
+    # get the embedding type parameter
+    embedding = data['embedding']
+
+    model_name = "_".join(['model', stopword, stemming, lstm_mode, embedding])
+
+    evaluation_report_path = f"sites/app/evaluation_report/{model_name}"
+
+    with open(f'{evaluation_report_path}/model_classification_report.json') as json_file:
+        classification_report = json.load(json_file)
+
+    with open(f'{evaluation_report_path}/model_classification_report_best_threshold.json') as json_file:
+        classification_report_best_threshold = json.load(json_file)
+
+    with open(f'{evaluation_report_path}/model_roc_auc_report.json') as json_file:
+        roc_auc_report = json.load(json_file)
+
+    with open(f"{evaluation_report_path}/confusion_matrix.png", "rb") as image_file:
+        confusion_matrix = base64.b64encode(image_file.read()).decode('utf-8')
+
+    with open(f"{evaluation_report_path}/confusion_matrix_best_threshold.png", "rb") as image_file:
+        confusion_matrix_best_threshold = base64.b64encode(
+            image_file.read()).decode('utf-8')
+
+    with open(f"{evaluation_report_path}/ROC-Curve.png", "rb") as image_file:
+        roc_curve = base64.b64encode(image_file.read()).decode('utf-8')
+
+    response = {
+        "model": model_name,
+        'stopword': stopword,
+        'stemming': stemming,
+        'lstm_mode': lstm_mode,
+        'embedding': embedding,
+        'classification_report': classification_report,
+        'classification_report_best_threshold': classification_report_best_threshold,
+        'roc_auc_report': roc_auc_report,
+        'confusion_matrix': confusion_matrix,
+        'confusion_matrix_best_threshold': confusion_matrix_best_threshold,
+        'roc_curve': roc_curve,
     }
 
     return jsonify(response)

@@ -32,7 +32,7 @@ function Navbar() {
             <Typography
               variant="h5"
               component="div"
-              sx={{ display: { xs: "none", sm: "block" }, fontWeight: 500 }}
+              sx={{ display: { xs: "none", md: "block" }, fontWeight: 500 }}
             >
               Clickbait Classifier
             </Typography>
@@ -54,6 +54,15 @@ function Navbar() {
                 sx={{ color: "white", p: 1 }}
               >
                 Predict
+              </Button>
+            </Link>
+            <Link to="/models" style={{ textDecoration: "none" }}>
+              <Button
+                variant="text"
+                color="inherit"
+                sx={{ color: "white", p: 1 }}
+              >
+                Models
               </Button>
             </Link>
             <Link to="/text-preprocessing" style={{ textDecoration: "none" }}>
@@ -120,6 +129,19 @@ function Navbar() {
                 >
                   <Typography variant="p" sx={{ fontSize: 14 }}>
                     Predict
+                  </Typography>
+                </Button>
+              </Link>
+              <Divider />
+              <Link to="/models" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="text"
+                  color="inherit"
+                  style={{ justifyContent: "flex-start" }}
+                  sx={{ py: 2, color: "white" }}
+                >
+                  <Typography variant="p" sx={{ fontSize: 14 }}>
+                    Models
                   </Typography>
                 </Button>
               </Link>
